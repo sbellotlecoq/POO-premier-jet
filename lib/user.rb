@@ -1,28 +1,32 @@
-require "pry"
+ require 'pry'
 
-class User
+ class User
+  attr_accessor :email, :age
+  @@user_count = 0
+  @@all_users_hash = Array.new
+  
+  def initialize(email_to_save, age_to_save)
+    @email = email_to_save
+    @age = age_to_save
+    @@all_users_hash.push(@email, @age) #rajoute les infos dans une nouvelle array
+  end
 
-	@@all_users = []
-	attr_accessor :email, :age
+   def show_itself #montre les infos d'instance  apres la creation des infos du user
+    puts self
+  end
 
-	#constructor
-	def initialize (email,age)
-		@email = email
-		@age = age
-		@@all_users << self
-	end
+  def self.all
+      @@all_users
+  end
 
-	# CLASS METHODS
-	#@@all_user accessor
-	def self.all
-		return @@all_users
-	end
-	#find an instance of user with the mail
 	def self.find_by_email (mail)
 		match = @@all_users.select {|user| user.email == mail}
 		return match[0] if match.size > 0
 		return nil
-	end
+
+  def self.all
+    return @@all_users_hash
+  end
 end
 
 
